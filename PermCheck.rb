@@ -1,43 +1,47 @@
 require 'byebug'
 
-class PermCheck
+# A non-empty zero-indexed array A consisting of N integers is given.
 
-	arr = [1]
+# A permutation is a sequence containing each element from 1 to N once, and only once.
+
+# For example, array A such that:
+
+#     A[0] = 4
+#     A[1] = 1
+#     A[2] = 3
+#     A[3] = 2
+# is a permutation, but array A such that:
+
+#     A[0] = 4
+#     A[1] = 1
+#     A[2] = 3
+# is not a permutation, because value 2 is missing.
+
+# The goal is to check whether array A is a permutation.
+# Return 1 if the result is a permutation 0 if not
+
+class PermCheck
+	arr = [-1, 2, 3, 0]
 
 	def self.solution(arr)
-		arr.sort!
-		result = 1
-		arr.each_with_index do |value, position|
-			
-			if value.next == arr[position.next] || value == arr.last 
-				if value == arr[position.pred]
-					result = 0
-				end
-			else
-				result = 0
-			end
+
+		h_table = {}
+		result = 0
+		# Create hash table to lookup the values arr needs to contain. h_table holds the permutation values 
+		(1..arr.length).each do |value|
+			h_table[value] = value
 		end
-		p result
+		# Check if the elements of arr can return a permutation, if not h_table.empty? than a permutation is not possible
+		arr.each do |value|	
+			h_table.delete(value)
+			result = 1 if h_table.empty?
+		end
+
+		 p result
+
 	end
 
-	def self.solution2(arr)
-		arr.sort!
-		p 1 if arr.size == 1 && arr.first == 1
-		p 0 if arr.size == 1 || arr.empty?
-		result = 1
-		arr.each_with_index do |value, position|
-			
-			if value.next == arr[position.next] || value == arr.last 
-				if value == arr[position.pred]
-					result = 0
-				end
-			else
-				result = 0
-			end
-		end
-		p result
-	end
+	PermCheck.solution(arr)
 
-	PermCheck.solution2(arr)
 
 end
