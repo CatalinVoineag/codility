@@ -13,19 +13,24 @@ class OneWay
 
 	def self.solution(str1, str2)
 		return false if str1.length > 255 || str2.length > 255
-		str1 = str1.downcase
-		str2 = str2.downcase
+		str1 = str1.downcase.chars
+		str2 = str2.downcase.chars
 
-		str1_chars = str1.chars
-		str2_chars = str2.chars
+		if str1.count == str2.count
+			return true if (str1 & str2).count == 1
+		elsif str1.count >  str2.count
+			return true if (str1 - str2).count == 1
+		elsif str2.count > str1.count
+			return true if (str2 - str1).count == 1
+		else
+			return false
+		end 
 
-		diff_chars = str1_chars - str2_chars
-		byebug
-		p diff_chars.length <= 1 ? true : false
-
+		return false
+		
 	end
 
-	OneWay.solution("car", "racfk")
+	OneWay.solution("car", "")
 
 
 end
