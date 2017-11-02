@@ -26,6 +26,8 @@ class Node
 		
 	end
 
+
+
 end
 
 class SinglyLinkedList
@@ -46,16 +48,39 @@ class SinglyLinkedList
 		current_node.set_pointer(new_node)
 	end
 
+		# To delete a node you set the previous node, the one in front of the node you want to delete.You set that node's pointer to the node after the one you want to delete.
+
 	def remove_node(data)
 		current_node = @head
 
+		if current_node.data == data
+			@head = current_node.pointer
+		else
+			while current_node.next? && current_node.pointer.data != data
+				current_node = current_node.pointer
+			end
+			unless current_node == nil
+				current_node.pointer = current_node.pointer.pointer
+			end
+		end	
 	end
 
+  def return_list
+    elements = []
+    current_node = @head
+    while current_node.pointer != nil
+      elements << current_node
+      current_node = current_node.pointer
+    end
+  	elements << current_node
+	end
+	
 	 def display
     current_node = @head
 
     while current_node.next?
       p current_node.data
+      p current_node.pointer
       current_node = current_node.pointer
     end
 
